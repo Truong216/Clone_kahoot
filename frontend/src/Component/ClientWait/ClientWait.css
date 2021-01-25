@@ -1,0 +1,72 @@
+h1 {
+  margin: 0;
+  padding: 0;
+}
+.Container_ClientWait {
+  height: 1006px;
+  -webkit-animation: bgcolor 20s infinite;
+  animation: bgcolor 10s infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+  font: 14px "Century Gothic", Futura, sans-serif;
+}
+@keyframes bgcolor {
+  0% {
+    background-color: #45a3e5;
+  }
+
+  30% {
+    background-color: #66bf39;
+  }
+
+  60% {
+    background-color: #eb670f;
+  }
+
+  90% {
+    background-color: #f35;
+  }
+
+  100% {
+    background-color: #864cbf;
+  }
+}
+
+.title {
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+.title_footer {
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  font-size: 17px;
+  color: white;
+  font-weight: bold;
+}
+.display_center {
+  width: 330px;
+  height: 270px;
+  display: grid;
+  place-items: center;
+}
+.display_score {
+  display: grid;
+  place-items: center;
+  height: 92%;
+}
+.display_info {
+  height: 8%;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.display_info > div {
+  margin: 0 30px;
+}
