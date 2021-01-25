@@ -15,13 +15,14 @@ function Chosing_Game(props) {
             'http://localhost:4000/quiz/sync'
           );
         const jsonData = await response.json()
-        console.log(jsonData)
+        console.log("list quiz", jsonData)
         setListQuiz(jsonData)
       };
     const startGame = (data) =>{
       socket.emit('check_Id', data, function(message){
         if(message){
           socket.emit('Host_Join', data)
+          console.log("data truyen host_join", data)
         // history.replace({ 
         //   pathname: 'home', 
         //   search: '?query=abc', 
@@ -36,6 +37,7 @@ function Chosing_Game(props) {
     useEffect(() => {
       socket.on("ok", (gamePin, id_quiz) => {
           const Pin = [id_quiz, gamePin]
+          console.log("id_quiz", id_quiz)
           props.history.push({
             pathname: '/HostWaitRoom',
             state: { data: Pin }
@@ -59,12 +61,6 @@ function Chosing_Game(props) {
         })
         console.log(rObj)
       }
-    // useEffect(() => {
-    //     socket.emit('requestDbNames');
-    //     return () => {
-    //         cleanup
-    //     }
-    // }, [])
     return (
         <>
             <a id="back" href="../">Back</a>
@@ -72,7 +68,7 @@ function Chosing_Game(props) {
             <h4 id="subtitle">Choose a Game Below or <a id="link" onClick={() => {props.history.push({pathname: '/Create_Game'})}}>Create your Own!</a></h4>
             <div id="game-list">
             {listQuiz.map((obj, i) => {
-              return <div onClick={() => startGame(obj._id) } id="title" key={i}>{obj.quiz.name}</div>;
+              return <div onClick={() => startGame(obj._id) } id="title" key={i}>{obj.quiz.quiz_name}</div>;
             })}
             </div>
         </>

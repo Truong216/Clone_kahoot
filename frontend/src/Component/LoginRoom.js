@@ -29,7 +29,7 @@ function Join_Game(props){
     }
     useEffect(() => {
       socket.on('connect', () => {
-        console.log(socket.id); // an alphanumeric id...
+        console.log(socket.id); 
         setSocket_id(socket.id);
      });
     }, [])

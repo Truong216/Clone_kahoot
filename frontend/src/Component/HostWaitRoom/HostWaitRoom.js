@@ -19,6 +19,7 @@ function HostWaitRoom(props){
     const Lock_click = () => setIsLock(!isLock)
     const startGame = () => {
         const data = [quiz, listPlayer.length, gamePin]
+        console.log("quiz truyen", quiz)
         props.history.push({
             pathname: '/Chosing_answer',
             search: '0',
@@ -32,9 +33,9 @@ function HostWaitRoom(props){
             `http://localhost:4000/quiz/sync/${id}`
         );
         const jsonData = await response.json()
-        const temp = jsonData[0].quiz.questions
+        const temp = jsonData[0].quiz.question
         console.log("test", temp)
-        setQuiz(jsonData[0].quiz.questions)
+        setQuiz(jsonData[0].quiz.question)
         socket.emit("room_quiz", temp, gamePin)
         }
         else{
@@ -62,6 +63,7 @@ function HostWaitRoom(props){
         }
         await fetchData();
         fetchQuiz(props.location.state.data[0]);
+        console.log("props.state", props.location.state.data[0])
       }, []);
     return(
         <div className="Container_HostWaitRoom">
@@ -80,7 +82,7 @@ function HostWaitRoom(props){
                         :
                         <div>
                             <span className="header_text">{~~(gamePin/10000)}</span>
-                            <span>{gamePin%10000}</span>
+                            <span>{gamePin.slice(gamePin.length - 4)}</span>
                         </div>
                     }
                 </div>

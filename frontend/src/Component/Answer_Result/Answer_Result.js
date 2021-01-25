@@ -103,7 +103,7 @@ function Answer_Result(props){
                     </div>
                 </div>
                 <div className="Main_Bottom">
-                    <div className="Answer_Option_1" style={ quiz[q].correct === 1  ? {opacity:1} : {opacity:0.25}}>
+                    <div className="Answer_Option_1" style={ Number(quiz[q].correct) === 1  ? {opacity:1} : {opacity:0.25}}>
                         <div className="Answer_Icon">
                             <GrStatusWarningSmall className="display_icon"/>
                         </div>
@@ -111,10 +111,10 @@ function Answer_Result(props){
                             {quiz[q].answer_1}
                         </div>
                         <div className="Answer_XO">
-                        {quiz[q].correct === 1 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>}    
+                        {Number(quiz[q].correct) === 1 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>}    
                         </div>
                     </div>
-                    <div className="Answer_Option_2" style={ quiz[q].correct ===2  ? {opacity:1} : {opacity:0.25}}>
+                    <div className="Answer_Option_2" style={ Number(quiz[q].correct) ===2  ? {opacity:1} : {opacity:0.25}}>
                         <div className="Answer_Icon">
                             <GrStatusUnknownSmall className="display_icon"/>
                         </div>
@@ -122,10 +122,10 @@ function Answer_Result(props){
                             {quiz[q].answer_2}
                         </div>
                         <div className="Answer_XO">
-                        {quiz[q].correct === 2 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
+                        {Number(quiz[q].correct) === 2 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
                         </div>
                     </div>
-                    <div className="Answer_Option_3" style={ quiz[q].correct === 3  ? {opacity:1} : {opacity:0.25}}>
+                    <div className="Answer_Option_3" style={ Number(quiz[q].correct) === 3  ? {opacity:1} : {opacity:0.25}}>
                         <div className="Answer_Icon">
                             <GrStatusGoodSmall className="display_icon"/>
                         </div>
@@ -133,10 +133,10 @@ function Answer_Result(props){
                             {quiz[q].answer_3}
                         </div>
                         <div className="Answer_XO">
-                        {quiz[q].correct === 3 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
+                        {Number(quiz[q].correct) === 3 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
                         </div>
                     </div>
-                    <div className="Answer_Option_4" style={ quiz[q].correct === 4  ? {opacity:1} : {opacity:0.25}}>
+                    <div className="Answer_Option_4" style={ Number(quiz[q].correct) === 4  ? {opacity:1} : {opacity:0.25}}>
                         <div className="Answer_Icon">
                             <GrStatusCriticalSmall className="display_icon"/>
                         </div>
@@ -144,7 +144,7 @@ function Answer_Result(props){
                             {quiz[q].answer_4}
                         </div>
                         <div className="Answer_XO">
-                        {quiz[q].correct === 4 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
+                        {Number(quiz[q].correct) === 4 ? <FaCheck className="display_chose_result"/> : <FaTimes className="display_chose_result"/>} 
                         </div>
                     </div>
                 </div>

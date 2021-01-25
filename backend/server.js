@@ -58,18 +58,24 @@ io.on('connection',(socket)=>{
             } 
     })
     socket.on("end_game", (gamePin) => {
+        const push = []
         list_Player.forEach((element, index) => {
             if(element.gamePin === gamePin) {
                 const id = list_Player[index].socket_id
                 socket.to(id).emit("new_room", gamePin);
-                axios.post("http://localhost:4000/player/new", {
-                    player: {
-                        "name": list_Player[index].Name,
-                        "score": list_Player[index].score,
-                    }
-                })
+                push.push({name: list_Player[index].Name, score: list_Player[index].score})
             }
         });
+        axios.post("http://localhost:4000/player/new", {
+                    player: push
+                })
+                    // Player.findOneAndUpdate(
+            //     { _id: id }, 
+            //     { $push: { player: {
+            //         "name": Name,
+            //         "score": 0,
+            //     } } },
+            // ).then(console.log("tao thanh cong"));
     })
     socket.on("sort_player", (gamePin) => {
         console.log("truoc khi sap xep", list_Player)
@@ -96,10 +102,10 @@ io.on('connection',(socket)=>{
         io.emit("player_answer", data, gamePin)
         const found = list_Player.findIndex(el => el.id === data)
         const time_index = time.findIndex(el => el.gamePin === Number(gamePin))
-        list_Player[found].answer = i;
+        list_Player[found].answer = Number(i);
         if(time_index != -1){
             list_Player[found].point = time[time_index].time;
-            console.log("diem", time[time_index].time)
+            console.log("diem nguoi choi", list_Player[found])
         }
     })
     socket.on("start_game", (gamePin) =>{
@@ -117,17 +123,18 @@ io.on('connection',(socket)=>{
         
     })
     socket.on("Time_up", (q, answer, gamePin) => {
+        console.log("loai truyen", typeof(answer))
         io.emit("answer_result", q, gamePin)
         const time_index = time.findIndex(el => el.gamePin === Number(gamePin))
         time[time_index].time = 0
-        console.log("time", time)
         list_Player.forEach((element, index) => {
-            if(element.answer === answer && element.gamePin === gamePin) {
+            console.log("loai goi", typeof(element.answer))
+            if(element.answer === Number(answer) && element.gamePin === gamePin) {
                 list_Player[index].score = list_Player[index].score + list_Player[index].point;
                 const id = list_Player[index].socket_id
                 socket.to(id).emit("get_score", list_Player[index].score, list_Player[index].point);
             }
-            else if(element.gamePin === gamePin && element.answer != answer){
+            else if(element.gamePin === gamePin && element.answer != Number(answer)){
                 list_Player[index].point =0;
                 const id = list_Player[index].socket_id
                 socket.to(id).emit("get_score", list_Player[index].score, list_Player[index].point);
@@ -138,18 +145,18 @@ io.on('connection',(socket)=>{
         const result_index = list_result.findIndex(el => el.gamePin === gamePin)
         if(result_index != -1 ){
         list_Player.forEach((element, index) => {
-            if(element.gamePin === gamePin && element.answer === 1 ) {
+            if(element.gamePin === gamePin && Number(element.answer) === 1 ) {
                 list_result[result_index].result[0] = list_result[result_index].result[0] + 1
             }
-            else if(element.gamePin === gamePin && element.answer === 2 )
+            else if(element.gamePin === gamePin && Number(element.answer) === 2 )
             {
                 list_result[result_index].result[1] = list_result[result_index].result[1] + 1
             }
-            else if(element.gamePin === gamePin && element.answer === 3 )
+            else if(element.gamePin === gamePin && Number(element.answer) === 3 )
             {
                 list_result[result_index].result[2] = list_result[result_index].result[2] + 1
             }
-            else if(element.gamePin === gamePin && element.answer === 4 )
+            else if(element.gamePin === gamePin && Number(element.answer) === 4 )
             {
                 list_result[result_index].result[3] = list_result[result_index].result[3] + 1
             }
@@ -164,13 +171,6 @@ io.on('connection',(socket)=>{
     })
     socket.on("Player_join", (Name, data, socket_id) =>{
         if(list_Game_Pin.some(Game_Pin => Game_Pin.gamePin === Number(data))){
-            // Player.findOneAndUpdate(
-            //     { _id: id }, 
-            //     { $push: { player: {
-            //         "name": Name,
-            //         "score": 0,
-            //     } } },
-            // ).then(console.log("tao thanh cong"));
             list_Player.push({gamePin: Number(data), id: socket_id, socket_id: '', Name: Name, answer: 0,score: 0, point: 0})
             io.emit("add_player", Number(data), list_Player)
             console.log("list_player:", list_Player)
@@ -193,15 +193,6 @@ io.on('connection',(socket)=>{
     })
     socket.on('create_Room', function(gamePin) {
         socket.join(gamePin);
-        // axios.post("http://localhost:4000/player/new", {
-        //     player: {
-        //         "name": "admin",
-        //         "score": -1,
-        //     }
-        // }).then(function (response) {
-        //     list_Game_Pin.push({gamePin: gamePin, id: response.data._id})
-        //     io.to(gamePin).emit("id", gamePin, response.data._id)
-        // })
         io.to(gamePin).emit("id", gamePin)
         list_Game_Pin.push({gamePin: gamePin})
         list_result.push({gamePin: gamePin, result: [0, 0, 0, 0]})
@@ -335,7 +326,16 @@ app.get('/player/delete', (req, res) => {
         }
     })
 })
-
+app.get('/quiz/delete', (req, res) => {
+    quiz.remove({}, (err, data) =>{
+        if(err) {
+            res.status(500).send(err)
+        }
+        else{
+            res.send(data)
+        }
+    })
+})
   app.put('/player/:id', async (req, res) => {
     const DB = req.body;
     try {

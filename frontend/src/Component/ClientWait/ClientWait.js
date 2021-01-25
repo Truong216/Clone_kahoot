@@ -40,6 +40,8 @@ function ClientWait(props){
     // }, [status, correct, timeUp]); 
     useEffect(() => {
         socket.emit("send_id", props.location.state.data[1])
+        console.log("gamepin", props.location.state.data[2])
+        console.log("socket id", props.location.state.data[1])
     }, []); 
     useEffect(() => {
         socket.on("get_score", (score, point) => {
@@ -47,6 +49,8 @@ function ClientWait(props){
             setPoint(point);
             setTimeUp(true);
             setCorrect(point > 0)
+            console.log("score", score)
+            console.log("point", point)
         });
     }, [score, point]);
     useEffect(() => {
