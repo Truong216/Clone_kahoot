@@ -23,11 +23,6 @@ function Chosing_Game(props) {
         if(message){
           socket.emit('Host_Join', data)
           console.log("data truyen host_join", data)
-        // history.replace({ 
-        //   pathname: 'home', 
-        //   search: '?query=abc', 
-        //   state:{isActive: true}
-        // });
         }
         else{
           console.log("xin chon cau khac")

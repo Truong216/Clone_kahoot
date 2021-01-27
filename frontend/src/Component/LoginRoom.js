@@ -22,7 +22,7 @@ function Join_Game(props){
               console.log('GamePin chính xác')
             }
             else{
-              console.log("Game Pin không chính xác")
+              alert("Game Pin không chính xác")
             }
         });
         console.log(gamePin)

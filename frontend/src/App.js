@@ -1,11 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import './App.css';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link,
-  Redirect 
 } from "react-router-dom";
 import WaitRoom from './Component/WaitRoom/WaitRoom'
 import Chosing_answer from './Component/Chosing_answer/Chosing_answer'
@@ -14,12 +11,9 @@ import LoginName from './Component/LoginName/LoginName'
 import LoginRoom from './Component/LoginRoom'
 import Create_Game from './Component/Create_Game/Create_Game'
 import Chosing_Game from './Component/Chosing_Game/Chosing_Game'
-import Create_Question from './Component/Create_Questions/Create_Question'
 import HostWaitRoom from './Component/HostWaitRoom/HostWaitRoom'
 import ClientWait from './Component/ClientWait/ClientWait'
 import Scoreboard from './Component/Scoreboard/Scoreboard'
-import axios from './axios'
-import { io } from 'socket.io-client'
 // let socket
 function App() {
   return (

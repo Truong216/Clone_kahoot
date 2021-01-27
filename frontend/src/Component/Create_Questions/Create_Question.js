@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Create_Question.css'
 export default function Create_Question(props) {
     const onInputChange = (e) => {

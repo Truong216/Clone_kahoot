@@ -232,17 +232,6 @@ db.once('open', () =>{
                     break;
             }
         });
-        // const playerchange = db.collection("players").watch();
-        // playerchange.on('change',(change) => {
-        //     switch (change.operationType) {
-        //         case "update":
-        //             io.emit("newplayer");
-        //             break;
-        //         case "delete":
-        //             io.emit("deletedThought", change.documentKey._id);
-        //             break;
-        //     }
-        // });
 });
 
 app.get('/', (req, res) => 

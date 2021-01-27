@@ -28,16 +28,6 @@ function ClientWait(props){
             setCurrent(q)
         });
     }, []); 
-    // useEffect(() => {
-    //     socket.on("startGame", (game_Pin) => {
-    //         if(game_Pin === gamePin){
-    //             console.log("nhan thanh cong")
-    //             setStatus(1)
-    //             setCorrect(false)
-    //             setTimeUp(false)
-    //         }
-    //     });
-    // }, [status, correct, timeUp]); 
     useEffect(() => {
         socket.emit("send_id", props.location.state.data[1])
         console.log("gamepin", props.location.state.data[2])

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import './Create_Game.css';
 import io from "socket.io-client";
@@ -32,9 +32,16 @@ function Create_Game(props) {
         setQuestions([...questions, test])
     }
     const handleChange = (index, property, value) => {
+        // 1. Make a shallow copy of the items
         const newquestions = [...questions];
-        newquestions[index][property] = value;
-        setQuestions(newquestions);
+        // 2. Make a shallow copy of the item you want to mutate
+        const question = {...questions[index]};
+        // 3. Replace the property you're intested in
+        question[property] = value;
+        // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
+        newquestions[index] = question;
+        // 5. Set the state to our new copy
+        setQuestions(newquestions)
     }
     const quiz_nameChange = e => {
         const { name, value } = e.target;

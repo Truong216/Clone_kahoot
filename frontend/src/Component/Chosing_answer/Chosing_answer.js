@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './Chosing_answer.css';
-import {FaUnlock} from "react-icons/fa";
 import {  withRouter } from "react-router-dom";
 import { 
     GrStatusWarningSmall, 

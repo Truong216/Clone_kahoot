@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './Player_Choose.css';
-import {FaUnlock} from "react-icons/fa";
 import {  withRouter } from "react-router-dom";
 import { 
     GrStatusWarningSmall, 

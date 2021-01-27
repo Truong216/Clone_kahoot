@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './Answer_Result.css';
-import {FaUnlock, FaCheck, FaTimes} from "react-icons/fa";
+import {FaCheck, FaTimes} from "react-icons/fa";
 import { 
     GrStatusWarningSmall, 
     GrStatusUnknownSmall,

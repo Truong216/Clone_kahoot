@@ -13,11 +13,8 @@ function LoginName(props,data){
     const LoginRoom = () =>{
         if(Name.length !== 0){
             socket.emit('Player_join', Name, props.location.state.data[0], props.location.state.data[1]);
-            console.log(Name)
             console.log(props.location.state.data[0])
             const data = [Name, props.location.state.data[1], props.location.state.data[0]] 
-            console.log("socket id", props.location.state.data[1])
-            console.log("game pin", props.location.state.data[0])
             props.history.push({
                 pathname: '/ClientWait',
                 state: { data: data }

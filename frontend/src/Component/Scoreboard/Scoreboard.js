@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './Scoreboard.css';
 import { withRouter } from "react-router-dom";
-import Player_Choose from '../Player_Choose/Player_Choose'
 import io from "socket.io-client";
-import { FaTruckMoving } from 'react-icons/fa';
 const ENDPOINT = "http://localhost:4000";
 const socket = io(
     ENDPOINT,

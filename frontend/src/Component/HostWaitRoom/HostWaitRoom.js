@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import './HostWaitRoom.css';
 import { withRouter } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
-import {FaUnlock} from "react-icons/fa";
-import {FaLock} from "react-icons/fa"
 import io from "socket.io-client";
 const ENDPOINT = "http://localhost:4000";
 const socket = io(
@@ -16,7 +14,6 @@ function HostWaitRoom(props){
     const[gamePin, setGamePin] = useState(props.location.state.data[1])
     const [listPlayer, setListPlayer] = useState([]);
     const [quiz, setQuiz] = useState([])
-    const Lock_click = () => setIsLock(!isLock)
     const startGame = () => {
         const data = [quiz, listPlayer.length, gamePin]
         console.log("quiz truyen", quiz)
@@ -82,7 +79,7 @@ function HostWaitRoom(props){
                         :
                         <div>
                             <span className="header_text">{~~(gamePin/10000)}</span>
-                            <span>{gamePin.slice(gamePin.length - 4)}</span>
+                            <span>{gamePin%10000}</span>
                         </div>
                     }
                 </div>
