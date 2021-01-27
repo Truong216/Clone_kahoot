@@ -12,6 +12,7 @@ function Scoreboard(props){
     const[quiz, setQuiz] = useState(props.location.state.data[0])
     const[gamePin, setGamePin] = useState(props.location.state.data[2])
     const [player, setPlayer] = useState([{ten: "loading", diem: 0}])
+    // const [date, setDate] = useState(new Date())
     const [q, setQ] = useState(0)
     const size = 3;
     useEffect(() => {
@@ -22,6 +23,8 @@ function Scoreboard(props){
     }, [q]); 
     const Nextquestion = () =>{
         const data = [quiz, props.location.state.data[1], gamePin]
+        const date = new Date()
+        const start_time = date.getTime()
         console.log(typeof(quiz.length))
         console.log(typeof(q))
         console.log("so q", q)
@@ -33,7 +36,7 @@ function Scoreboard(props){
                 search: `${q + 1}`,
                 state: { data: data },
             });
-            socket.emit("start_game", gamePin)
+            socket.emit("start_game", gamePin, start_time)
         }
         else{
             props.history.push({pathname: '/ChosingGame'})

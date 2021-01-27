@@ -12,6 +12,7 @@ const socket = io(
 function ClientWait(props){
     const [status, setStatus] = useState(0)
     const [current, setCurrent] = useState(0)
+    const [date, setDate] = useState(new Date())
     const[gamePin, setGamePin] = useState(props.location.state.data[2])
     const [socket_id, setSocket_id] = useState(props.location.state.data[1])
     const [score, setScore] = useState(0)
@@ -28,6 +29,7 @@ function ClientWait(props){
             setCurrent(q)
         });
     }, []); 
+        // Time : {date.toLocaleTimeString()}
     useEffect(() => {
         socket.emit("send_id", props.location.state.data[1])
         console.log("gamepin", props.location.state.data[2])
@@ -83,7 +85,7 @@ function ClientWait(props){
                 });
             }
         });
-    }, []);  
+    }, []);
     return(
         <div className="Container_ClientWait">
             <div className="display_score">

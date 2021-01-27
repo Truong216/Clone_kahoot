@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Route,
 } from "react-router-dom";
-import WaitRoom from './Component/WaitRoom/WaitRoom'
 import Chosing_answer from './Component/Chosing_answer/Chosing_answer'
 import Answer_Result from './Component/Answer_Result/Answer_Result'
 import LoginName from './Component/LoginName/LoginName'
@@ -20,10 +19,9 @@ function App() {
     <Router>
       <Route exact path ='/' component={LoginRoom} />
       <Route path='/LoginName' component={LoginName} />
-      <Route exact path ='/WaitRoom' component={WaitRoom} />
-      <Route exact path ='/ClientWait' component={ClientWait} />
-      <Route exact path ='/Create_Game' component={Create_Game} />
-      <Route exact path ='/Chosing_answer' component={Chosing_answer} />
+      <Route path ='/ClientWait' component={ClientWait} />
+      <Route path ='/Create_Game' component={Create_Game} />
+      <Route path ='/Chosing_answer' component={Chosing_answer} />
       <Route path='/ChosingGame' component={Chosing_Game} />
       <Route path='/Scoreboard' component={Scoreboard} />
       <Route path='/Answer_Result' component={Answer_Result} />

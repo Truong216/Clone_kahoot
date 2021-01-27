@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Player_Choose.css';
 import {  withRouter } from "react-router-dom";
 import { 
@@ -16,8 +16,9 @@ const socket = io(
   });
 function Player_Choose(props){
     const answer = (i) =>{
-        console.log(props.gamePin)
-        socket.emit('Choose_Answer', i, props.data, props.gamePin);
+        const date = new Date()
+        const chose_time = date.getTime()
+        socket.emit('Choose_Answer', i, props.data, props.gamePin, chose_time);
     }
     return(
         <div className="Container">

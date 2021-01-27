@@ -13,16 +13,19 @@ function HostWaitRoom(props){
     const [isLock, setIsLock] = useState(true)
     const[gamePin, setGamePin] = useState(props.location.state.data[1])
     const [listPlayer, setListPlayer] = useState([]);
+    // const [date, setDate] = useDate(new Date())
     const [quiz, setQuiz] = useState([])
     const startGame = () => {
         const data = [quiz, listPlayer.length, gamePin]
+        const date = new Date()
+        const start_time = date.getTime()
         console.log("quiz truyen", quiz)
         props.history.push({
             pathname: '/Chosing_answer',
             search: '0',
             state: { data: data}
         });
-        socket.emit("start_game", gamePin)
+        socket.emit("start_game", gamePin, start_time)
     } 
     const fetchQuiz = async (id) => {
         if(id !== undefined){

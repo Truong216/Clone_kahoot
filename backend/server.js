@@ -18,17 +18,9 @@ const list_Game_Pin = [{gamePin: 1, id: 1}]
 const list_Player = []
 const list_quiz = []
 const list_result = [{gamePin: 1, result: [0, 0, 0, 0]}]
-const time = [{gamePin: 1, time: 1000}]
-setInterval(() => {
-    time.forEach((element, index) => {
-        if(element.time === 0 ){
-            time[index].time = 0
-        }
-        else{
-            time[index].time = time[index].time - 5
-        }
-    });
-}, 100);
+const point = [{gamePin: 1, point: 1000}]
+const time = [{gamePin: 1, time: 15}]
+const total_point = 16000
 io.on('connection',(socket)=>{
     socket.on('join_Room',(gamePin)=>{
         console.log(typeof(gamePin))
@@ -69,13 +61,6 @@ io.on('connection',(socket)=>{
         axios.post("http://localhost:4000/player/new", {
                     player: push
                 })
-                    // Player.findOneAndUpdate(
-            //     { _id: id }, 
-            //     { $push: { player: {
-            //         "name": Name,
-            //         "score": 0,
-            //     } } },
-            // ).then(console.log("tao thanh cong"));
     })
     socket.on("sort_player", (gamePin) => {
         console.log("truoc khi sap xep", list_Player)
@@ -96,37 +81,38 @@ io.on('connection',(socket)=>{
         });
         console.log("sau khi sap xep", list_Player)
     })
-    socket.on("Choose_Answer", (i, data, gamePin) => {
+    socket.on("Choose_Answer", (i, data, gamePin, chose_time) => {
         console.log("gamePin", gamePin)
         console.log("chon cau tra loi")
         io.emit("player_answer", data, gamePin)
         const found = list_Player.findIndex(el => el.id === data)
-        const time_index = time.findIndex(el => el.gamePin === Number(gamePin))
+        const point_index = point.findIndex(el => el.gamePin === Number(gamePin))
         list_Player[found].answer = Number(i);
-        if(time_index != -1){
-            list_Player[found].point = time[time_index].time;
+        if(point_index != -1){
+            const t = chose_time - point[point_index].point
+            list_Player[found].point = ~~((total_point - t)/10)
             console.log("diem nguoi choi", list_Player[found])
         }
     })
-    socket.on("start_game", (gamePin) =>{
+    socket.on("start_game", (gamePin, start_time) =>{
         console.log("chay game")
+        console.log("start time:", start_time)
         console.log("game oin start", gamePin)
         io.emit("startGame", gamePin)
-        const time_index = time.findIndex(el => el.gamePin === Number(gamePin))
-        if(time_index != -1 ){
-            time[time_index].time = 1000
+        const point_index = point.findIndex(el => el.gamePin === Number(gamePin))
+        if(point_index != -1 ){
+            point[point_index].point = start_time
         }
-        const result_index = time.findIndex(el => el.gamePin === gamePin)
+        const result_index = point.findIndex(el => el.gamePin === gamePin)
         if(result_index != -1 ){
             list_result[result_index].result = [0, 0, 0, 0];
-        }
-        
+        }      
     })
     socket.on("Time_up", (q, answer, gamePin) => {
         console.log("loai truyen", typeof(answer))
         io.emit("answer_result", q, gamePin)
-        const time_index = time.findIndex(el => el.gamePin === Number(gamePin))
-        time[time_index].time = 0
+        const point_index = point.findIndex(el => el.gamePin === Number(gamePin))
+        point[point_index].point = 0
         list_Player.forEach((element, index) => {
             console.log("loai goi", typeof(element.answer))
             if(element.answer === Number(answer) && element.gamePin === gamePin) {
@@ -196,7 +182,7 @@ io.on('connection',(socket)=>{
         io.to(gamePin).emit("id", gamePin)
         list_Game_Pin.push({gamePin: gamePin})
         list_result.push({gamePin: gamePin, result: [0, 0, 0, 0]})
-        time.push({gamePin: gamePin, time: 1000})
+        point.push({gamePin: gamePin, point: 1000})
     });
 
     socket.on("room_quiz", (quiz, gamePin) =>{
